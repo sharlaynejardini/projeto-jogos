@@ -344,3 +344,113 @@ button:hover {
     font-size: 2.4rem;
   }
 }
+
+@media (max-height: 860px) {
+  body {
+    padding: 10px;
+  }
+
+  .memory-page {
+    gap: 10px;
+    min-height: calc(100dvh - 20px);
+  }
+
+  .topbar h1 {
+    font-size: clamp(1.5rem, 3.6vw, 2.2rem);
+    margin-bottom: 4px;
+  }
+
+  .topbar p {
+    font-size: 0.92rem;
+  }
+
+  .game-panel {
+    padding: 14px;
+  }
+
+  .difficulty-btn,
+  .primary-btn,
+  .secondary-btn {
+    padding: 10px 12px;
+    font-size: 0.92rem;
+  }
+
+  .scoreboard {
+    gap: 10px;
+    margin: 12px 0;
+  }
+
+  .score-card {
+    padding: 10px;
+  }
+
+  .score-card strong {
+    font-size: 1.35rem;
+  }
+
+  .feedback-box {
+    min-height: 54px;
+    padding: 12px;
+    margin-bottom: 12px;
+  }
+
+  #feedback-text {
+    font-size: 0.92rem;
+  }
+
+  .game-board {
+    gap: 10px;
+  }
+
+  .card-front {
+    font-size: 1.7rem;
+  }
+
+  .card-front small {
+    font-size: 0.82rem;
+  }
+
+  .card-back.vowel-card,
+  .card-icon {
+    font-size: 2.2rem;
+  }
+
+  .card-word {
+    font-size: 1rem;
+  }
+}
+
+@media (max-height: 700px) {
+  .topbar h1 {
+    font-size: 1.3rem;
+  }
+
+  .topbar p {
+    font-size: 0.82rem;
+  }
+
+  .game-panel {
+    padding: 10px;
+  }
+
+  .panel-row,
+  .difficulty-box,
+  .action-list {
+    gap: 8px;
+  }
+
+  .difficulty-btn,
+  .primary-btn,
+  .secondary-btn {
+    padding: 8px 10px;
+    font-size: 0.84rem;
+  }
+
+  .score-card strong {
+    font-size: 1.2rem;
+  }
+
+  .game-board {
+    gap: 8px;
+  }
+}
