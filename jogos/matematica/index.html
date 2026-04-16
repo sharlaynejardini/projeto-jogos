@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Desafio Matemático</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="game-page">
+    <header class="game-topbar">
+      <a class="back-link" href="../../index.html">Voltar aos jogos</a>
+      <h1>Desafio Matemático</h1>
+      <p>Escolha as operações e clique em Começar para iniciar as rodadas.</p>
+    </header>
+
+    <section class="game">
+      <img
+        src="../../imagens/Acertou.png"
+        alt="Imagem de acerto"
+        id="success-image"
+        class="side-image"
+      >
+      <img
+        src="../../imagens/Errou.png"
+        alt="Imagem de erro"
+        id="error-image"
+        class="side-image"
+      >
+
+      <section class="controls">
+        <p class="operation-title">Escolha as operações:</p>
+        <div class="operation-list">
+          <button type="button" class="operation-option" data-operation="addition">Soma</button>
+          <button type="button" class="operation-option" data-operation="subtraction">Subtração</button>
+          <button type="button" class="operation-option" data-operation="multiplication">Multiplicação</button>
+          <button type="button" class="operation-option" data-operation="division">Divisão</button>
+        </div>
+      </section>
+
+      <section class="scoreboard">
+        <div>
+          <span>Pontos</span>
+          <strong id="score">0</strong>
+        </div>
+        <div>
+          <span>Rodada</span>
+          <strong id="round">0</strong>
+        </div>
+      </section>
+
+      <section class="question-box">
+        <div id="question" class="question-display">
+          <span class="question-symbol">Escolha as operações e clique em Começar.</span>
+        </div>
+        <div id="answer-options" class="answer-options"></div>
+        <div class="buttons">
+          <button id="start-btn" type="button">Começar</button>
+        </div>
+        <p id="message"></p>
+      </section>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
