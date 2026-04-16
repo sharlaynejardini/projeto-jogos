@@ -51,6 +51,7 @@ function VowelGame() {
   const [selectedSlot, setSelectedSlot] = useState(0)
   const [lockedRound, setLockedRound] = useState(false)
   const [feedbackImage, setFeedbackImage] = useState('')
+  const [checkedWord, setCheckedWord] = useState(false)
   const [roundData, setRoundData] = useState(() => createRoundData(randomItem(wordBank)))
 
   const isRoundComplete = roundData.filledLetters.every((letter) => letter !== '')
@@ -91,6 +92,7 @@ function VowelGame() {
     setSelectedSlot(0)
     setLockedRound(false)
     setFeedbackImage('')
+    setCheckedWord(false)
     setRoundData(createRoundData(randomItem(wordBank)))
     setMessage('Escolha uma vogal e complete a palavra.')
   }
@@ -113,6 +115,8 @@ function VowelGame() {
   }
 
   function handleCheckWord() {
+    setCheckedWord(true)
+
     if (!isRoundComplete) {
       setFeedbackImage('')
       setMessage('Preencha todos os espaços antes de conferir.')
@@ -142,6 +146,7 @@ function VowelGame() {
     }))
     setSelectedSlot(0)
     setFeedbackImage('')
+    setCheckedWord(false)
     setMessage('As vogais foram limpas. Tente novamente.')
   }
 
@@ -228,7 +233,12 @@ function VowelGame() {
           <button className="app-button secondary-action" type="button" onClick={clearWord}>
             Limpar
           </button>
-          <button className="app-button secondary-action" type="button" onClick={startNextRound}>
+          <button
+            className="app-button secondary-action"
+            type="button"
+            onClick={startNextRound}
+            disabled={!checkedWord}
+          >
             Próxima palavra
           </button>
         </div>

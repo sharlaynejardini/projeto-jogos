@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jogo da Memória das Vogais</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="memory-page">
+    <header class="topbar">
+      <a class="back-link" href="/">Voltar aos jogos</a>
+      <h1>Jogo da Memória das Vogais</h1>
+      <p>Encontre os pares certos: uma vogal e uma palavra que comece com ela.</p>
+    </header>
+
+    <section class="game-panel">
+      <div class="panel-row setup-row">
+        <div class="difficulty-box">
+          <span class="label">Nível</span>
+          <div class="difficulty-list">
+            <button class="difficulty-btn active" data-difficulty="easy">Fácil</button>
+            <button class="difficulty-btn" data-difficulty="medium">Médio</button>
+            <button class="difficulty-btn" data-difficulty="hard">Difícil</button>
+          </div>
+        </div>
+
+        <div class="action-list">
+          <button id="restart-btn" class="primary-btn">Reiniciar jogo</button>
+          <button id="sound-btn" class="secondary-btn">Ouvir vogais</button>
+        </div>
+      </div>
+
+      <section class="scoreboard">
+        <div class="score-card">
+          <span class="label">Tentativas</span>
+          <strong id="attempts">0</strong>
+        </div>
+        <div class="score-card">
+          <span class="label">Pontos</span>
+          <strong id="score">0</strong>
+        </div>
+        <div class="score-card">
+          <span class="label">Estrelas</span>
+          <strong id="stars">★★★</strong>
+        </div>
+      </section>
+
+      <section class="feedback-box">
+        <p id="feedback-text">Clique em duas cartas para formar os pares.</p>
+        <div id="celebration" class="celebration" aria-hidden="true"></div>
+      </section>
+
+      <section id="game-board" class="game-board" aria-label="Tabuleiro do jogo da memória"></section>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

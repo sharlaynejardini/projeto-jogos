@@ -12,8 +12,10 @@ const games = [
   },
   {
     title: 'Jogo da Memória',
-    description: 'Encontre pares e treine atenção, concentração e memória visual.',
-    status: 'Em breve',
+    description: 'Combine vogais com palavras e imagens em um jogo da memória divertido.',
+    href: '/jogos/memoria-vogais/index.html',
+    status: 'Novo',
+    external: true,
   },
   {
     title: 'Jogo das Vogais',
