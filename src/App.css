@@ -1,20 +1,24 @@
 .site-shell {
   width: min(100%, 1100px);
   margin: 0 auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .site-home {
-  min-height: 100vh;
+  height: 100dvh;
   background:
     radial-gradient(circle at top left, rgba(255, 255, 255, 0.75), transparent 28%),
     linear-gradient(135deg, #f7d794, #63cdda);
-  padding: 32px 20px;
+  padding: clamp(12px, 2vh, 24px) 20px;
+  overflow: hidden;
 }
 
 .hero {
   background: rgba(255, 255, 255, 0.94);
   border-radius: 28px;
-  padding: 32px;
+  padding: clamp(20px, 3vh, 30px);
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
   text-align: center;
 }
@@ -40,11 +44,14 @@
 }
 
 .games-section {
-  margin-top: 28px;
+  margin-top: clamp(14px, 2vh, 24px);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .games-section h2 {
-  margin-bottom: 16px;
+  margin: 0 0 12px;
   font-size: 1.7rem;
   text-align: center;
 }
@@ -52,14 +59,15 @@
 .game-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 18px;
+  gap: clamp(12px, 2vh, 18px);
   align-items: stretch;
+  flex: 1;
 }
 
 .game-card {
   background: rgba(255, 255, 255, 0.95);
   border-radius: 24px;
-  padding: 24px;
+  padding: clamp(18px, 2.4vh, 24px);
   box-shadow: 0 18px 30px rgba(0, 0, 0, 0.1);
   text-align: center;
   display: flex;
@@ -85,13 +93,14 @@
 }
 
 .game-card h3 {
-  margin-bottom: 10px;
+  margin: 0 0 8px;
   font-size: 1.35rem;
 }
 
 .game-card p {
   line-height: 1.6;
   max-width: 28ch;
+  margin: 0;
 }
 
 .game-tag {
@@ -107,9 +116,9 @@
   display: block;
   width: 100%;
   max-width: 150px;
-  height: 110px;
+  height: clamp(80px, 10vh, 110px);
   object-fit: contain;
-  margin: 0 auto 16px;
+  margin: 0 auto 12px;
   border-radius: 18px;
   background: #fff7df;
   padding: 10px;
@@ -153,52 +162,58 @@
 }
 
 .game-page {
-  min-height: 100vh;
+  height: 100dvh;
   background:
     radial-gradient(circle at top center, rgba(255, 255, 255, 0.82), transparent 24%),
     linear-gradient(135deg, #f7d794, #63cdda);
   color: #1f2933;
-  padding: 24px;
-  overflow-x: hidden;
+  padding: clamp(12px, 2vh, 20px);
+  overflow: hidden;
 }
 
 .game-topbar {
-  margin-bottom: 22px;
+  margin-bottom: clamp(10px, 1.6vh, 18px);
   text-align: center;
 }
 
 .back-link {
   display: inline-flex;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
   color: #0f5fcc;
   font-weight: 700;
   text-decoration: none;
 }
 
 .game-topbar h1 {
-  font-size: clamp(2rem, 4vw, 3rem);
-  margin-bottom: 8px;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  margin: 0 0 6px;
 }
 
 .game-topbar p {
-  font-size: 1.05rem;
+  font-size: 1rem;
+  margin: 0;
 }
 
 .game-panel {
   position: relative;
   width: 100%;
+  flex: 1;
+  min-height: 0;
   background: rgba(255, 255, 255, 0.95);
   border-radius: 24px;
-  padding: 32px;
+  padding: clamp(18px, 2.6vh, 28px);
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .side-image {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: min(420px, 70%);
+  width: min(320px, 54vh, 62%);
   opacity: 0;
   visibility: hidden;
   z-index: 2;
@@ -215,7 +230,6 @@
 
 .controls,
 .question-box {
-  margin-bottom: 22px;
   text-align: center;
 }
 
@@ -248,14 +262,14 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
-  margin-top: 12px;
+  margin-top: 10px;
 }
 
 .level-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
-  margin: 12px 0 18px;
+  margin: 10px 0 14px;
 }
 
 .level-option {
@@ -288,20 +302,20 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 14px;
-  margin-bottom: 22px;
+  margin: 14px 0;
 }
 
 .scoreboard div {
   background: #eaf2ff;
   border-radius: 14px;
-  padding: 16px;
+  padding: 12px;
   text-align: center;
 }
 
 .scoreboard strong {
   display: block;
-  font-size: 1.7rem;
-  margin-top: 6px;
+  font-size: clamp(1.35rem, 2.6vh, 1.7rem);
+  margin-top: 4px;
 }
 
 .question-display {
@@ -310,27 +324,27 @@
   justify-content: center;
   gap: 12px;
   flex-wrap: wrap;
-  min-height: 112px;
-  padding: 20px;
+  min-height: clamp(84px, 14vh, 112px);
+  padding: clamp(12px, 2vh, 18px);
   border-radius: 18px;
   background: #fff4cc;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .question-number {
-  min-width: 90px;
-  padding: 12px 16px;
+  min-width: clamp(68px, 9vh, 90px);
+  padding: 10px 14px;
   border-radius: 16px;
   background: #ffffff;
   color: #d35400;
-  font-size: 2.4rem;
+  font-size: clamp(1.8rem, 4.2vh, 2.4rem);
   font-weight: 700;
   text-align: center;
   box-shadow: 0 8px 18px rgba(211, 84, 0, 0.16);
 }
 
 .question-symbol {
-  font-size: 1.9rem;
+  font-size: clamp(1.4rem, 3.3vh, 1.9rem);
   font-weight: 700;
 }
 
@@ -362,9 +376,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  padding: 22px;
-  margin-bottom: 22px;
+  gap: 10px;
+  padding: clamp(14px, 2.4vh, 22px);
+  margin-bottom: 14px;
   border-radius: 22px;
   background: linear-gradient(180deg, #fff9e8, #fff1bf);
 }
@@ -373,18 +387,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 132px;
-  height: 132px;
+  width: clamp(84px, 13vh, 132px);
+  height: clamp(84px, 13vh, 132px);
   border-radius: 28px;
   background: #ffffff;
-  font-size: 4rem;
+  font-size: clamp(2.6rem, 6vh, 4rem);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
 }
 
 .vowel-hint {
   max-width: 28ch;
   text-align: center;
-  font-size: 1.02rem;
+  font-size: 0.98rem;
+  margin: 0;
 }
 
 .word-slots {
@@ -392,18 +407,18 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 18px;
+  gap: 10px;
+  margin-bottom: 14px;
 }
 
 .letter-tile {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 62px;
-  min-height: 68px;
+  min-width: clamp(48px, 7vh, 62px);
+  min-height: clamp(52px, 8vh, 68px);
   border-radius: 18px;
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 3.8vh, 2rem);
   font-weight: 700;
   text-transform: uppercase;
 }
@@ -441,13 +456,13 @@
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 12px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .vowel-option {
   background: #fff7df;
   color: #d35400;
-  font-size: 1.4rem;
+  font-size: clamp(1.1rem, 2.8vh, 1.4rem);
   font-weight: 800;
 }
 
@@ -455,7 +470,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 14px;
+  margin-top: 12px;
   justify-content: center;
 }
 
@@ -472,8 +487,8 @@
 }
 
 .message {
-  margin-top: 16px;
-  min-height: 24px;
+  margin-top: 12px;
+  min-height: 22px;
   font-weight: bold;
   text-align: center;
 }
@@ -488,7 +503,7 @@
   }
 
   .side-image {
-    width: min(320px, 82%);
+    width: min(260px, 48vh, 82%);
   }
 
   .vowel-options {
@@ -498,17 +513,21 @@
 
 @media (max-width: 680px) {
   .hero {
-    padding: 24px;
+    padding: 20px;
+  }
+
+  .game-grid {
+    grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 640px) {
   .game-page {
-    padding: 16px;
+    padding: 12px;
   }
 
   .game-panel {
-    padding: 22px;
+    padding: 16px;
   }
 
   .operation-list,
@@ -527,6 +546,14 @@
   .question-number {
     min-width: 72px;
     font-size: 2rem;
+  }
+
+  .game-topbar p,
+  .hero-text,
+  .game-card p,
+  .vowel-hint,
+  .message {
+    font-size: 0.95rem;
   }
 
   .primary-action {
