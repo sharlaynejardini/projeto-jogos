@@ -1,5 +1,4 @@
-import { Link } from 'react-router-dom'
-import { useEffect, useRef, useState } from 'react'
+﻿import { useEffect, useRef, useState } from 'react'
 
 const operations = [
   { key: 'addition', label: 'Soma', symbol: '+' },
@@ -38,7 +37,7 @@ function createQuestion(selectedOperations) {
   let num1 = randomNumber(1, 10)
   let num2 = randomNumber(1, 10)
   let answer = 0
-  let symbol = operations.find((item) => item.key === operation)?.symbol ?? '+'
+  const symbol = operations.find((item) => item.key === operation)?.symbol ?? '+'
 
   if (operation === 'addition') {
     answer = num1 + num2
@@ -48,7 +47,6 @@ function createQuestion(selectedOperations) {
     if (num2 > num1) {
       ;[num1, num2] = [num2, num1]
     }
-
     answer = num1 - num2
   }
 
@@ -82,7 +80,7 @@ function createAnswerOptions(correctAnswer) {
   }))
 }
 
-function MathGamePage() {
+function MathGame() {
   const timeoutRef = useRef(null)
 
   const [selectedOperations, setSelectedOperations] = useState([])
@@ -120,11 +118,11 @@ function MathGamePage() {
         : [...currentOperations, operationKey]
 
       if (!gameStarted) {
-        if (nextOperations.length === 0) {
-          setMessage('Selecione uma ou mais operações e clique em Começar.')
-        } else {
-          setMessage('')
-        }
+        setMessage(
+          nextOperations.length === 0
+            ? 'Selecione uma ou mais operações e clique em Começar.'
+            : '',
+        )
       }
 
       return nextOperations
@@ -207,103 +205,89 @@ function MathGamePage() {
   }
 
   return (
-    <main className="game-page">
-      <div className="site-shell">
-        <header className="game-topbar">
-          <Link className="back-link" to="/">
-            Voltar aos jogos
-          </Link>
-          <h1>Desafio Matemático</h1>
-          <p>Escolha as operações e clique em Começar para iniciar as rodadas.</p>
-        </header>
+    <section className="game-panel">
+      <img
+        src="/images/Acertou.png"
+        alt="Imagem de acerto"
+        className={`side-image ${feedbackImage === 'success' ? 'active' : ''}`}
+      />
+      <img
+        src="/images/Errou.png"
+        alt="Imagem de erro"
+        className={`side-image ${feedbackImage === 'error' ? 'active' : ''}`}
+      />
 
-        <section className="game-panel">
-          <img
-            src="/images/Acertou.png"
-            alt="Imagem de acerto"
-            className={`side-image ${feedbackImage === 'success' ? 'active' : ''}`}
-          />
-          <img
-            src="/images/Errou.png"
-            alt="Imagem de erro"
-            className={`side-image ${feedbackImage === 'error' ? 'active' : ''}`}
-          />
+      <section className="controls">
+        <p className="operation-title">Escolha as operações:</p>
+        <div className="operation-list">
+          {operations.map((operation) => (
+            <button
+              key={operation.key}
+              type="button"
+              className={`app-button operation-option ${
+                selectedOperations.includes(operation.key) ? 'active' : ''
+              }`}
+              onClick={() => toggleOperation(operation.key)}
+            >
+              {operation.label}
+            </button>
+          ))}
+        </div>
+      </section>
 
-          <section className="controls">
-            <p className="operation-title">Escolha as operações:</p>
-            <div className="operation-list">
-              {operations.map((operation) => (
-                <button
-                  key={operation.key}
-                  type="button"
-                  className={`app-button operation-option ${
-                    selectedOperations.includes(operation.key) ? 'active' : ''
-                  }`}
-                  onClick={() => toggleOperation(operation.key)}
-                >
-                  {operation.label}
-                </button>
-              ))}
-            </div>
-          </section>
+      <section className="scoreboard">
+        <div>
+          <span>Pontos</span>
+          <strong>{score}</strong>
+        </div>
+        <div>
+          <span>Rodada</span>
+          <strong>{round}</strong>
+        </div>
+      </section>
 
-          <section className="scoreboard">
-            <div>
-              <span>Pontos</span>
-              <strong>{score}</strong>
-            </div>
-            <div>
-              <span>Rodada</span>
-              <strong>{round}</strong>
-            </div>
-          </section>
+      <section className="question-box">
+        <div className="question-display">
+          {currentQuestion ? (
+            <>
+              <span className="question-number">{currentQuestion.num1}</span>
+              <span className="question-symbol">{currentQuestion.symbol}</span>
+              <span className="question-number">{currentQuestion.num2}</span>
+              <span className="question-symbol">= ?</span>
+            </>
+          ) : (
+            <span className="question-symbol">
+              {selectedOperations.length === 0
+                ? 'Escolha as operações e clique em Começar.'
+                : 'Tudo pronto! Clique em Começar para iniciar.'}
+            </span>
+          )}
+        </div>
 
-          <section className="question-box">
-            <div className="question-display">
-              {currentQuestion ? (
-                <>
-                  <span className="question-number">{currentQuestion.num1}</span>
-                  <span className="question-symbol">{currentQuestion.symbol}</span>
-                  <span className="question-number">{currentQuestion.num2}</span>
-                  <span className="question-symbol">= ?</span>
-                </>
-              ) : (
-                <span className="question-symbol">
-                  {selectedOperations.length === 0
-                    ? 'Escolha as operações e clique em Começar.'
-                    : 'Tudo pronto! Clique em Começar para iniciar.'}
-                </span>
-              )}
-            </div>
+        <div className="answer-options">
+          {answerOptions.map((option) => (
+            <button
+              key={option.value}
+              type="button"
+              className={`app-button answer-option ${option.status !== 'idle' ? option.status : ''}`}
+              onClick={() => handleAnswer(option.value)}
+              disabled={answeredQuestion}
+            >
+              {option.value}
+            </button>
+          ))}
+        </div>
 
-            <div className="answer-options">
-              {answerOptions.map((option) => (
-                <button
-                  key={option.value}
-                  type="button"
-                  className={`app-button answer-option ${
-                    option.status !== 'idle' ? option.status : ''
-                  }`}
-                  onClick={() => handleAnswer(option.value)}
-                  disabled={answeredQuestion}
-                >
-                  {option.value}
-                </button>
-              ))}
-            </div>
+        <div className="buttons">
+          <button className="app-button primary-action" type="button" onClick={startRound}>
+            {gameStarted ? 'Próxima pergunta' : 'Começar'}
+          </button>
+        </div>
 
-            <div className="buttons">
-              <button className="app-button primary-action" type="button" onClick={startRound}>
-                {gameStarted ? 'Próxima pergunta' : 'Começar'}
-              </button>
-            </div>
-
-            <p className="message">{message}</p>
-          </section>
-        </section>
-      </div>
-    </main>
+        <p className="message">{message}</p>
+      </section>
+    </section>
   )
 }
 
-export default MathGamePage
+export default MathGame

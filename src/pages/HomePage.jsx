@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+﻿import GameCard from '../components/GameCard'
 
 const games = [
   {
@@ -7,7 +7,7 @@ const games = [
       'Pratique soma, subtração, multiplicação e divisão com perguntas rápidas e respostas em botões.',
     href: '/jogos/matematica',
     status: 'Disponível',
-    image: '/images/Acertou.png',
+    image: '/images/desafiomatemático.png',
     featured: true,
   },
   {
@@ -16,9 +16,11 @@ const games = [
     status: 'Em breve',
   },
   {
-    title: 'Caça-Palavras',
-    description: 'Descubra palavras escondidas e desenvolva leitura e vocabulário.',
-    status: 'Em breve',
+    title: 'Jogo das Vogais',
+    description: 'Observe a imagem e complete a palavra escolhendo as vogais corretas.',
+    href: '/jogos/vogais',
+    status: 'Novo',
+    image: '/images/jogoVogais.png',
   },
 ]
 
@@ -38,31 +40,7 @@ function HomePage() {
           <h2>Escolha um jogo</h2>
           <div className="game-grid">
             {games.map((game) => (
-              <article
-                key={game.title}
-                className={`game-card ${game.featured ? 'featured' : 'muted'}`}
-              >
-                <p className="game-tag">{game.status}</p>
-
-                {game.image ? (
-                  <img
-                    className="game-thumb"
-                    src={game.image}
-                    alt={`Miniatura do jogo ${game.title}`}
-                  />
-                ) : null}
-
-                <h3>{game.title}</h3>
-                <p>{game.description}</p>
-
-                {game.href ? (
-                  <Link className="game-link" to={game.href}>
-                    Abrir jogo
-                  </Link>
-                ) : (
-                  <span className="game-link disabled">Em construção</span>
-                )}
-              </article>
+              <GameCard key={game.title} {...game} />
             ))}
           </div>
         </section>
