@@ -15,6 +15,7 @@ const games = [
     description: 'Combine vogais com palavras e imagens em um jogo da memória divertido.',
     href: '/jogos/memoria-vogais/index.html',
     status: 'Novo',
+    image: '/images/jogoMemoria.png',
     external: true,
   },
   {
