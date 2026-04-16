@@ -1,18 +1,14 @@
 .site-shell {
   width: min(100%, 1100px);
   margin: 0 auto;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
 }
 
 .site-home {
-  height: 100dvh;
+  min-height: 100dvh;
   background:
     radial-gradient(circle at top left, rgba(255, 255, 255, 0.75), transparent 28%),
     linear-gradient(135deg, #f7d794, #63cdda);
   padding: clamp(12px, 2vh, 24px) 20px;
-  overflow: hidden;
 }
 
 .hero {
@@ -45,9 +41,6 @@
 
 .games-section {
   margin-top: clamp(14px, 2vh, 24px);
-  flex: 1;
-  display: flex;
-  flex-direction: column;
 }
 
 .games-section h2 {
@@ -61,7 +54,6 @@
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: clamp(12px, 2vh, 18px);
   align-items: stretch;
-  flex: 1;
 }
 
 .game-card {
@@ -74,7 +66,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  min-height: 0;
 }
 
 .card-link {
@@ -163,13 +154,13 @@
 }
 
 .game-page {
-  height: 100dvh;
+  min-height: 100dvh;
   background:
     radial-gradient(circle at top center, rgba(255, 255, 255, 0.82), transparent 24%),
     linear-gradient(135deg, #f7d794, #63cdda);
   color: #1f2933;
   padding: clamp(12px, 2vh, 20px);
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .game-topbar {
@@ -198,16 +189,11 @@
 .game-panel {
   position: relative;
   width: 100%;
-  flex: 1;
-  min-height: 0;
   background: rgba(255, 255, 255, 0.95);
   border-radius: 24px;
   padding: clamp(18px, 2.6vh, 28px);
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }
 
 .side-image {
@@ -232,10 +218,6 @@
 .controls,
 .question-box {
   text-align: center;
-}
-
-.question-box {
-  min-height: 0;
 }
 
 .operation-title,

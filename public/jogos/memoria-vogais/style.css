@@ -12,16 +12,12 @@ body {
     linear-gradient(135deg, #ffe7a3, #8be0d0);
   color: #1f2933;
   padding: clamp(10px, 2vh, 18px);
-  overflow: hidden;
 }
 
 .memory-page {
   width: min(100%, 1100px);
   margin: 0 auto;
   min-height: calc(100dvh - clamp(20px, 4vh, 36px));
-  display: grid;
-  grid-template-rows: auto 1fr;
-  gap: clamp(10px, 1.8vh, 18px);
 }
 
 .topbar {
@@ -50,9 +46,6 @@ body {
   border-radius: 26px;
   padding: clamp(16px, 2.5vh, 24px);
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.16);
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
 }
 
 .panel-row {
@@ -193,9 +186,6 @@ button:hover {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 14px;
-  flex: 1;
-  min-height: 0;
-  align-content: stretch;
 }
 
 .memory-card {
