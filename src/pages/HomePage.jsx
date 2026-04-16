@@ -19,6 +19,13 @@ const games = [
     external: true,
   },
   {
+    title: 'Material Dourado',
+    description: 'Monte números até 50 usando dezenas e unidades de forma visual e divertida.',
+    href: '/jogos/material-dourado',
+    status: 'Novo',
+    image: '/images/jogoMaterialDourado/dezena.png',
+  },
+  {
     title: 'Jogo das Vogais',
     description: 'Observe a imagem e complete a palavra escolhendo as vogais corretas.',
     href: '/jogos/vogais',
