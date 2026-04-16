@@ -251,6 +251,26 @@
   margin-top: 12px;
 }
 
+.level-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 12px 0 18px;
+}
+
+.level-option {
+  background: #d9e1ea;
+  color: #52606d;
+  font-weight: 700;
+  opacity: 0.55;
+}
+
+.level-option.active {
+  background: #f59e0b;
+  color: #ffffff;
+  opacity: 1;
+}
+
 .operation-option {
   background: #d9e1ea;
   color: #52606d;
@@ -463,6 +483,10 @@
     grid-template-columns: 1fr 1fr;
   }
 
+  .level-list {
+    grid-template-columns: 1fr 1fr;
+  }
+
   .side-image {
     width: min(320px, 82%);
   }
@@ -489,6 +513,10 @@
 
   .operation-list,
   .answer-options {
+    grid-template-columns: 1fr;
+  }
+
+  .level-list {
     grid-template-columns: 1fr;
   }
 

@@ -7,6 +7,13 @@ const operations = [
   { key: 'division', label: 'Divisão', symbol: '/' },
 ]
 
+const levels = [
+  { key: 'nube', label: 'Nube', min: 1, max: 10 },
+  { key: 'pro', label: 'Pro', min: 5, max: 30 },
+]
+
+const totalRoundsPerLevel = 10
+
 function randomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
@@ -32,10 +39,11 @@ function createWrongAnswer(correctAnswer) {
   return candidate
 }
 
-function createQuestion(selectedOperations) {
+function createQuestion(selectedOperations, levelKey) {
   const operation = selectedOperations[randomNumber(0, selectedOperations.length - 1)]
-  let num1 = randomNumber(1, 10)
-  let num2 = randomNumber(1, 10)
+  const level = levels.find((item) => item.key === levelKey) ?? levels[0]
+  let num1 = randomNumber(level.min, level.max)
+  let num2 = randomNumber(level.min, level.max)
   let answer = 0
   const symbol = operations.find((item) => item.key === operation)?.symbol ?? '+'
 
@@ -55,8 +63,8 @@ function createQuestion(selectedOperations) {
   }
 
   if (operation === 'division') {
-    answer = num1
-    num2 = randomNumber(1, 10)
+    answer = randomNumber(level.min, Math.max(level.min + 1, Math.floor(level.max / 2)))
+    num2 = randomNumber(level.min, Math.max(level.min + 1, Math.floor(level.max / 2)))
     num1 = answer * num2
   }
 
@@ -84,6 +92,7 @@ function MathGame() {
   const timeoutRef = useRef(null)
 
   const [selectedOperations, setSelectedOperations] = useState([])
+  const [selectedLevel, setSelectedLevel] = useState('nube')
   const [score, setScore] = useState(0)
   const [round, setRound] = useState(0)
   const [currentQuestion, setCurrentQuestion] = useState(null)
@@ -92,6 +101,7 @@ function MathGame() {
   const [gameStarted, setGameStarted] = useState(false)
   const [answeredQuestion, setAnsweredQuestion] = useState(false)
   const [feedbackImage, setFeedbackImage] = useState('')
+  const [gameFinished, setGameFinished] = useState(false)
 
   useEffect(() => {
     return () => {
@@ -108,6 +118,23 @@ function MathGame() {
     }
   }
 
+  function resetBoard() {
+    setCurrentQuestion(null)
+    setAnswerOptions([])
+    setAnsweredQuestion(false)
+    setFeedbackImage('')
+  }
+
+  function finishGame(finalScore) {
+    clearScheduledQuestion()
+    setGameFinished(true)
+    setGameStarted(false)
+    resetBoard()
+    setMessage(
+      `Fim da partida! Você fez ${finalScore} ponto(s) no nível ${selectedLevel === 'nube' ? 'Nube' : 'Pro'}.`,
+    )
+  }
+
   function toggleOperation(operationKey) {
     clearScheduledQuestion()
 
@@ -117,10 +144,10 @@ function MathGame() {
         ? currentOperations.filter((item) => item !== operationKey)
         : [...currentOperations, operationKey]
 
-      if (!gameStarted) {
+      if (!gameStarted && !gameFinished) {
         setMessage(
           nextOperations.length === 0
-            ? 'Selecione uma ou mais operações e clique em Começar.'
+            ? 'Selecione uma ou mais operações, escolha o nível e clique em Começar.'
             : '',
         )
       }
@@ -128,12 +155,27 @@ function MathGame() {
       return nextOperations
     })
 
-    if (gameStarted) {
-      setFeedbackImage('')
-      setMessage('')
-      setAnsweredQuestion(false)
-      setCurrentQuestion(null)
-      setAnswerOptions([])
+    if (gameStarted || gameFinished) {
+      setGameStarted(false)
+      setGameFinished(false)
+      setRound(0)
+      setScore(0)
+      resetBoard()
+      setMessage('Configuração alterada. Clique em Começar para iniciar uma nova partida.')
+    }
+  }
+
+  function selectLevel(levelKey) {
+    clearScheduledQuestion()
+    setSelectedLevel(levelKey)
+
+    if (gameStarted || gameFinished) {
+      setGameStarted(false)
+      setGameFinished(false)
+      setRound(0)
+      setScore(0)
+      resetBoard()
+      setMessage('Nível alterado. Clique em Começar para iniciar uma nova partida.')
     }
   }
 
@@ -142,13 +184,25 @@ function MathGame() {
 
     if (selectedOperations.length === 0) {
       setGameStarted(false)
-      setCurrentQuestion(null)
-      setAnswerOptions([])
-      setMessage('Selecione uma ou mais operações e clique em Começar.')
+      setGameFinished(false)
+      resetBoard()
+      setMessage('Selecione uma ou mais operações, escolha o nível e clique em Começar.')
       return
     }
 
-    const nextQuestion = createQuestion(selectedOperations)
+    const nextRound = gameFinished || !gameStarted ? 1 : round + 1
+
+    if (gameFinished || !gameStarted) {
+      setScore(0)
+      setGameFinished(false)
+    }
+
+    if (nextRound > totalRoundsPerLevel) {
+      finishGame(score)
+      return
+    }
+
+    const nextQuestion = createQuestion(selectedOperations, selectedLevel)
 
     setCurrentQuestion(nextQuestion)
     setAnswerOptions(createAnswerOptions(nextQuestion.answer))
@@ -156,12 +210,12 @@ function MathGame() {
     setMessage('')
     setGameStarted(true)
     setAnsweredQuestion(false)
-    setRound((currentRound) => currentRound + 1)
+    setRound(nextRound)
   }
 
   function handleAnswer(selectedAnswer) {
     if (!gameStarted || !currentQuestion) {
-      setMessage('Escolha as operações e clique em Começar.')
+      setMessage('Escolha as operações, o nível e clique em Começar.')
       return
     }
 
@@ -188,12 +242,19 @@ function MathGame() {
     )
 
     if (isCorrect) {
-      setScore((currentScore) => currentScore + 1)
+      const nextScore = score + 1
+      setScore(nextScore)
       setFeedbackImage('success')
       setMessage('Resposta correta! Você ganhou 1 ponto.')
 
       timeoutRef.current = setTimeout(() => {
         timeoutRef.current = null
+
+        if (round >= totalRoundsPerLevel) {
+          finishGame(nextScore)
+          return
+        }
+
         startRound()
       }, 2200)
 
@@ -218,6 +279,20 @@ function MathGame() {
       />
 
       <section className="controls">
+        <p className="operation-title">Escolha o nível:</p>
+        <div className="level-list">
+          {levels.map((level) => (
+            <button
+              key={level.key}
+              type="button"
+              className={`app-button level-option ${selectedLevel === level.key ? 'active' : ''}`}
+              onClick={() => selectLevel(level.key)}
+            >
+              {level.label}
+            </button>
+          ))}
+        </div>
+
         <p className="operation-title">Escolha as operações:</p>
         <div className="operation-list">
           {operations.map((operation) => (
@@ -242,7 +317,7 @@ function MathGame() {
         </div>
         <div>
           <span>Rodada</span>
-          <strong>{round}</strong>
+          <strong>{round}/{totalRoundsPerLevel}</strong>
         </div>
       </section>
 
@@ -257,9 +332,11 @@ function MathGame() {
             </>
           ) : (
             <span className="question-symbol">
-              {selectedOperations.length === 0
-                ? 'Escolha as operações e clique em Começar.'
-                : 'Tudo pronto! Clique em Começar para iniciar.'}
+              {gameFinished
+                ? `Partida encerrada no nível ${selectedLevel === 'nube' ? 'Nube' : 'Pro'}.`
+                : selectedOperations.length === 0
+                  ? 'Escolha as operações, o nível e clique em Começar.'
+                  : 'Tudo pronto! Clique em Começar para iniciar.'}
             </span>
           )}
         </div>
@@ -280,7 +357,7 @@ function MathGame() {
 
         <div className="buttons">
           <button className="app-button primary-action" type="button" onClick={startRound}>
-            {gameStarted ? 'Próxima pergunta' : 'Começar'}
+            {gameFinished ? 'Jogar novamente' : gameStarted ? 'Próxima pergunta' : 'Começar'}
           </button>
         </div>
 

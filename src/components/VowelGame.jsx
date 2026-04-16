@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 
 const vowels = ['A', 'E', 'I', 'O', 'U']
 const vowelSet = new Set(['a', 'e', 'i', 'o', 'u'])
@@ -50,6 +50,7 @@ function VowelGame() {
   const [message, setMessage] = useState('Escolha uma vogal e complete a palavra.')
   const [selectedSlot, setSelectedSlot] = useState(0)
   const [lockedRound, setLockedRound] = useState(false)
+  const [feedbackImage, setFeedbackImage] = useState('')
   const [roundData, setRoundData] = useState(() => createRoundData(randomItem(wordBank)))
 
   const isRoundComplete = roundData.filledLetters.every((letter) => letter !== '')
@@ -57,15 +58,44 @@ function VowelGame() {
     (letter, index) => letter === roundData.letters[roundData.missingIndexes[index]],
   )
 
+  useEffect(() => {
+    function handleKeyDown(event) {
+      if (lockedRound) {
+        return
+      }
+
+      const pressedKey = event.key.toUpperCase()
+
+      if (vowels.includes(pressedKey)) {
+        handleVowelInput(pressedKey)
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [lockedRound, selectedSlot, roundData])
+
+  function moveToNextSlot(currentSlot, totalSlots) {
+    if (totalSlots === 0) {
+      return 0
+    }
+
+    return currentSlot >= totalSlots - 1 ? currentSlot : currentSlot + 1
+  }
+
   function startNextRound() {
     setRound((currentRound) => currentRound + 1)
     setSelectedSlot(0)
     setLockedRound(false)
+    setFeedbackImage('')
     setRoundData(createRoundData(randomItem(wordBank)))
     setMessage('Escolha uma vogal e complete a palavra.')
   }
 
-  function handleVowelClick(vowel) {
+  function handleVowelInput(vowel) {
     if (lockedRound) {
       return
     }
@@ -73,16 +103,18 @@ function VowelGame() {
     setRoundData((currentRoundData) => {
       const nextFilledLetters = [...currentRoundData.filledLetters]
       nextFilledLetters[selectedSlot] = vowel
-
       return {
         ...currentRoundData,
         filledLetters: nextFilledLetters,
       }
     })
+
+    setSelectedSlot((currentSlot) => moveToNextSlot(currentSlot, roundData.missingIndexes.length))
   }
 
   function handleCheckWord() {
     if (!isRoundComplete) {
+      setFeedbackImage('')
       setMessage('Preencha todos os espaços antes de conferir.')
       return
     }
@@ -90,10 +122,12 @@ function VowelGame() {
     if (isWordCorrect) {
       setScore((currentScore) => currentScore + 1)
       setLockedRound(true)
+      setFeedbackImage('success')
       setMessage('Muito bem! Você completou a palavra corretamente.')
       return
     }
 
+    setFeedbackImage('error')
     setMessage('Quase lá! Troque as vogais que ficaram erradas e tente novamente.')
   }
 
@@ -107,11 +141,23 @@ function VowelGame() {
       filledLetters: Array(currentRoundData.missingIndexes.length).fill(''),
     }))
     setSelectedSlot(0)
+    setFeedbackImage('')
     setMessage('As vogais foram limpas. Tente novamente.')
   }
 
   return (
     <section className="game-panel">
+      <img
+        src="/images/Acertou.png"
+        alt="Imagem de acerto"
+        className={`side-image ${feedbackImage === 'success' ? 'active' : ''}`}
+      />
+      <img
+        src="/images/Errou.png"
+        alt="Imagem de erro"
+        className={`side-image ${feedbackImage === 'error' ? 'active' : ''}`}
+      />
+
       <section className="scoreboard">
         <div>
           <span>Acertos</span>
@@ -167,7 +213,7 @@ function VowelGame() {
               key={vowel}
               type="button"
               className="app-button vowel-option"
-              onClick={() => handleVowelClick(vowel)}
+              onClick={() => handleVowelInput(vowel)}
               disabled={lockedRound}
             >
               {vowel}
