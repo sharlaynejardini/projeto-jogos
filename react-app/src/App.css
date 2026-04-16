@@ -16,6 +16,7 @@
   border-radius: 28px;
   padding: 32px;
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+  text-align: center;
 }
 
 .eyebrow {
@@ -35,6 +36,7 @@
   font-size: 1.1rem;
   line-height: 1.6;
   max-width: 700px;
+  margin: 0 auto;
 }
 
 .games-section {
@@ -44,6 +46,7 @@
 .games-section h2 {
   margin-bottom: 16px;
   font-size: 1.7rem;
+  text-align: center;
 }
 
 .game-grid {
@@ -57,6 +60,7 @@
   border-radius: 24px;
   padding: 24px;
   box-shadow: 0 18px 30px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
 .game-card h3 {
@@ -83,7 +87,7 @@
   max-width: 150px;
   height: 110px;
   object-fit: contain;
-  margin-bottom: 16px;
+  margin: 0 auto 16px;
   border-radius: 18px;
   background: #fff7df;
   padding: 10px;
@@ -137,6 +141,7 @@
 
 .game-topbar {
   margin-bottom: 22px;
+  text-align: center;
 }
 
 .back-link {
@@ -188,6 +193,7 @@
 .controls,
 .question-box {
   margin-bottom: 22px;
+  text-align: center;
 }
 
 .operation-title,
