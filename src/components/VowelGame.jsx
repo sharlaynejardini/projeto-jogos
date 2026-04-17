@@ -151,7 +151,7 @@ function VowelGame() {
   }
 
   return (
-    <section className="game-panel">
+    <section className="game-panel vowel-game container-fluid px-0">
       <img
         src="/images/Acertou.png"
         alt="Imagem de acerto"
@@ -163,14 +163,18 @@ function VowelGame() {
         className={`side-image ${feedbackImage === 'error' ? 'active' : ''}`}
       />
 
-      <section className="scoreboard">
-        <div>
-          <span>Acertos</span>
-          <strong>{score}</strong>
+      <section className="row g-3 scoreboard vowel-scoreboard">
+        <div className="col-6">
+          <div className="vowel-stat-card">
+            <span>Acertos</span>
+            <strong>{score}</strong>
+          </div>
         </div>
-        <div>
-          <span>Rodada</span>
-          <strong>{round}</strong>
+        <div className="col-6">
+          <div className="vowel-stat-card">
+            <span>Rodada</span>
+            <strong>{round}</strong>
+          </div>
         </div>
       </section>
 
@@ -212,35 +216,42 @@ function VowelGame() {
           })}
         </div>
 
-        <div className="vowel-options">
+        <div className="row g-2 vowel-options vowel-options-grid">
           {vowels.map((vowel) => (
-            <button
-              key={vowel}
-              type="button"
-              className="app-button vowel-option"
-              onClick={() => handleVowelInput(vowel)}
-              disabled={lockedRound}
-            >
-              {vowel}
-            </button>
+            <div key={vowel} className="col-6 col-md">
+              <button
+                type="button"
+                className="app-button vowel-option"
+                onClick={() => handleVowelInput(vowel)}
+                disabled={lockedRound}
+              >
+                {vowel}
+              </button>
+            </div>
           ))}
         </div>
 
-        <div className="buttons">
-          <button className="app-button primary-action" type="button" onClick={handleCheckWord}>
-            Conferir palavra
-          </button>
-          <button className="app-button secondary-action" type="button" onClick={clearWord}>
-            Limpar
-          </button>
-          <button
-            className="app-button secondary-action"
-            type="button"
-            onClick={startNextRound}
-            disabled={!checkedWord}
-          >
-            Próxima palavra
-          </button>
+        <div className="row g-2 buttons vowel-actions">
+          <div className="col-12 col-lg-4">
+            <button className="app-button primary-action" type="button" onClick={handleCheckWord}>
+              Conferir palavra
+            </button>
+          </div>
+          <div className="col-12 col-lg-4">
+            <button className="app-button secondary-action" type="button" onClick={clearWord}>
+              Limpar
+            </button>
+          </div>
+          <div className="col-12 col-lg-4">
+            <button
+              className="app-button secondary-action"
+              type="button"
+              onClick={startNextRound}
+              disabled={!checkedWord}
+            >
+              Próxima palavra
+            </button>
+          </div>
         </div>
 
         <p className="message">{message}</p>

@@ -266,7 +266,7 @@ function MathGame() {
   }
 
   return (
-    <section className="game-panel">
+    <section className="game-panel math-game container-fluid px-0">
       <img
         src="/images/Acertou.png"
         alt="Imagem de acerto"
@@ -278,50 +278,62 @@ function MathGame() {
         className={`side-image ${feedbackImage === 'error' ? 'active' : ''}`}
       />
 
-      <section className="controls">
+      <section className="controls math-controls">
         <p className="operation-title">Escolha o nível:</p>
-        <div className="level-list">
+        <div className="row g-2 level-list math-level-list">
           {levels.map((level) => (
-            <button
-              key={level.key}
-              type="button"
-              className={`app-button level-option ${selectedLevel === level.key ? 'active' : ''}`}
-              onClick={() => selectLevel(level.key)}
-            >
-              {level.label}
-            </button>
+            <div key={level.key} className="col-12 col-md-6">
+              <button
+                type="button"
+                className={`app-button level-option ${selectedLevel === level.key ? 'active' : ''}`}
+                onClick={() => selectLevel(level.key)}
+              >
+                {level.label}
+              </button>
+            </div>
           ))}
         </div>
 
         <p className="operation-title">Escolha as operações:</p>
-        <div className="operation-list">
+        <div className="row g-2 operation-list math-operation-list">
           {operations.map((operation) => (
-            <button
-              key={operation.key}
-              type="button"
-              className={`app-button operation-option ${
-                selectedOperations.includes(operation.key) ? 'active' : ''
-              }`}
-              onClick={() => toggleOperation(operation.key)}
-            >
-              {operation.label}
-            </button>
+            <div key={operation.key} className="col-12 col-md-6 col-xl-3">
+              <button
+                type="button"
+                className={`app-button operation-option ${
+                  selectedOperations.includes(operation.key) ? 'active' : ''
+                }`}
+                onClick={() => toggleOperation(operation.key)}
+              >
+                {operation.label}
+              </button>
+            </div>
           ))}
         </div>
-      </section>
 
-      <section className="scoreboard">
-        <div>
-          <span>Pontos</span>
-          <strong>{score}</strong>
-        </div>
-        <div>
-          <span>Rodada</span>
-          <strong>{round}/{totalRoundsPerLevel}</strong>
+        <div className="math-help-strip">
+          <span>1. Escolha o nível.</span>
+          <span>2. Marque as operações.</span>
+          <span>3. Clique em Começar.</span>
         </div>
       </section>
 
-      <section className="question-box">
+      <section className="row g-3 scoreboard math-scoreboard">
+        <div className="col-6">
+          <div className="math-stat-card">
+            <span>Pontos</span>
+            <strong>{score}</strong>
+          </div>
+        </div>
+        <div className="col-6">
+          <div className="math-stat-card">
+            <span>Rodada</span>
+            <strong>{round}/{totalRoundsPerLevel}</strong>
+          </div>
+        </div>
+      </section>
+
+      <section className="question-box math-question-box">
         <div className="question-display">
           {currentQuestion ? (
             <>
@@ -341,24 +353,27 @@ function MathGame() {
           )}
         </div>
 
-        <div className="answer-options">
+        <div className="row g-2 answer-options math-answer-grid">
           {answerOptions.map((option) => (
-            <button
-              key={option.value}
-              type="button"
-              className={`app-button answer-option ${option.status !== 'idle' ? option.status : ''}`}
-              onClick={() => handleAnswer(option.value)}
-              disabled={answeredQuestion}
-            >
-              {option.value}
-            </button>
+            <div key={option.value} className="col-12 col-md-6">
+              <button
+                type="button"
+                className={`app-button answer-option ${option.status !== 'idle' ? option.status : ''}`}
+                onClick={() => handleAnswer(option.value)}
+                disabled={answeredQuestion}
+              >
+                {option.value}
+              </button>
+            </div>
           ))}
         </div>
 
-        <div className="buttons">
-          <button className="app-button primary-action" type="button" onClick={startRound}>
-            {gameFinished ? 'Jogar novamente' : gameStarted ? 'Próxima pergunta' : 'Começar'}
-          </button>
+        <div className="row g-2 buttons math-actions">
+          <div className="col-12 col-lg-4 mx-auto">
+            <button className="app-button primary-action" type="button" onClick={startRound}>
+              {gameFinished ? 'Jogar novamente' : gameStarted ? 'Próxima pergunta' : 'Começar'}
+            </button>
+          </div>
         </div>
 
         <p className="message">{message}</p>

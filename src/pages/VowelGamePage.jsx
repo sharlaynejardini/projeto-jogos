@@ -3,9 +3,9 @@ import VowelGame from '../components/VowelGame'
 
 function VowelGamePage() {
   return (
-    <main className="game-page">
-      <div className="site-shell">
-        <header className="game-topbar">
+    <main className="game-page vowel-page">
+      <div className="site-shell container-fluid px-0">
+        <header className="game-topbar vowel-topbar">
           <Link className="back-link" to="/">
             Voltar aos jogos
           </Link>

@@ -3,9 +3,9 @@ import MathGame from '../components/MathGame'
 
 function MathGamePage() {
   return (
-    <main className="game-page">
-      <div className="site-shell">
-        <header className="game-topbar">
+    <main className="game-page math-page">
+      <div className="site-shell container-fluid px-0">
+        <header className="game-topbar math-topbar">
           <Link className="back-link" to="/">
             Voltar aos jogos
           </Link>
